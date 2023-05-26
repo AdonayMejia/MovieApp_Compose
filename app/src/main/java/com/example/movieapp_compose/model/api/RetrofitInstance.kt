@@ -7,9 +7,7 @@ import com.example.movieapp_compose.model.datamodel.MovieDetails
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-@SuppressLint("StaticFieldLeak")
 object RetrofitInstance {
-    private lateinit var context: Context
     private const val BASE_URL = "https://www.omdbapi.com/"
 
     private val retrofit : Retrofit by lazy {

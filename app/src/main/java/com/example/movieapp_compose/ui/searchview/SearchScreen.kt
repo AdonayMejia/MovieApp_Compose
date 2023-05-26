@@ -12,7 +12,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -74,13 +77,15 @@ fun MovieList(movies: List<MovieDetails>) {
 
 @Composable
 fun MovieItem(movie: MovieDetails) {
-    Row(modifier = Modifier.padding(16.dp)) {
+    Row(modifier = Modifier.padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically) {
         Image(painter = rememberAsyncImagePainter(
             model = movie.poster),
             contentDescription = "Movie Poster",
-            modifier = Modifier.size(80.dp))
+            modifier = Modifier.size(90.dp))
         Spacer(modifier = Modifier.width(16.dp))
         Text(text = movie.title)
+        Icon(imageVector = Icons.Outlined.FavoriteBorder, contentDescription = "Favorite")
     }
 }
 
