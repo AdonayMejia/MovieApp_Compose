@@ -5,6 +5,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.movieapp_compose.model.datamodel.MovieDetails
 import com.example.movieapp_compose.ui.favoritesview.FavoriteScreen
 import com.example.movieapp_compose.ui.searchview.SearchScreen
 
