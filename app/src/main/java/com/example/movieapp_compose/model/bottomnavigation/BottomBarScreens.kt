@@ -11,13 +11,13 @@ sealed class BottomBarScreens(
     val icon : ImageVector
 ) {
     object Search : BottomBarScreens(
-        route = "search",
+        "SearchScreen",
         title = "Search Movies",
         icon = Icons.TwoTone.Movie
     )
 
     object Favorite : BottomBarScreens(
-        route = "favorite",
+        "FavoriteScreen",
         title = "Favorites Movies",
         icon = Icons.TwoTone.Star
     )

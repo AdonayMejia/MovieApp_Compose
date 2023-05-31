@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.runtime.rxjava2)
     implementation(libs.runtime.livedata)
     implementation(libs.coil.compose)
+    implementation("androidx.compose.ui:ui-util")
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.navigation.compose)
     implementation(libs.retrofit)

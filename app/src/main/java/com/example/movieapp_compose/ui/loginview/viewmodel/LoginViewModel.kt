@@ -37,8 +37,9 @@ class LoginViewModel( private val context: Context) : ViewModel(){
     private fun onLoginSuccess(user: UserModel) {
         val sharedPreferences = context.getSharedPreferences("owner", Context.MODE_PRIVATE)
         sharedPreferences.edit().putInt("userId", user.id).apply()
+        sharedPreferences.edit().putString("userName", user.username).apply()
         sharedPreferences.edit().putBoolean("isLoggedIn", true).apply()
-        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+        val sdf = SimpleDateFormat("dd/M/yyyy")
         val currentDate = sdf.format(Date())
         sharedPreferences.edit().putString("connection", currentDate).apply()
     }

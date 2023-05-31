@@ -1,18 +1,16 @@
-package com.example.movieapp_compose.ui.loginview
+package com.example.movieapp_compose.ui.registerview
 
-import android.widget.Toast
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,27 +21,21 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.movieapp_compose.model.bottomnavigation.MainScreen
-import com.example.movieapp_compose.ui.loginview.viewmodel.LoginViewModel
-import com.example.movieapp_compose.ui.searchview.SearchScreen
+import com.example.movieapp_compose.ui.registerview.viewmodel.RegisterViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen(
-    viewModel: LoginViewModel,
-    navController: NavHostController) {
+fun RegisterScreen(
+    viewModel: RegisterViewModel,
+    controller: NavHostController) {
 
-    val context = LocalContext.current
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
-
     Scaffold(scaffoldState = scaffoldState) {
         Column(
             modifier = Modifier
@@ -52,50 +44,47 @@ fun LoginScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Login")
-            Spacer(modifier = Modifier.height(16.dp))
-
             OutlinedTextField(
                 value = username,
-                onValueChange = { user ->
-                    username = user },
-                label = { Text("Username") }
+                onValueChange = { username = it },
+                label = { Text("Username") },
+                modifier = Modifier.fillMaxWidth()
             )
-
             Spacer(modifier = Modifier.height(16.dp))
-
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
                 label = { Text("Password") },
-                visualTransformation = PasswordVisualTransformation()
+                modifier = Modifier.fillMaxWidth()
             )
-
             Spacer(modifier = Modifier.height(16.dp))
-
-            Row {
-                Button(onClick = {
-                    val error = viewModel.login(username, password)
-                    if (error != null) {
-                        coroutineScope.launch {
-                            scaffoldState.snackbarHostState.showSnackbar(error)
+            OutlinedTextField(
+                value = confirmPassword,
+                onValueChange = { confirmPassword = it },
+                label = { Text("Confirm Password") },
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(
+                onClick = {
+                    if (
+                        username.isNotBlank() &&
+                        password.isNotBlank() &&
+                        password == confirmPassword
+                    ) {
+                        val success = viewModel.registerUser(username, password)
+                        if (success) {
+                            controller.popBackStack()
                         }
                     } else {
-                        navController.navigate("mainscreen")
+                        coroutineScope.launch {
+                            scaffoldState.snackbarHostState.showSnackbar("Passwords Should be different")
+                        }
                     }
-                }) {
-                    Text(text = "Login")
                 }
-                Spacer(modifier = Modifier.padding(16.dp))
-                Button(
-                    onClick = {
-                        navController.navigate("SignUp")
-                    }
-                ) {
-                    Text("Sign Up")
-                }
+            ) {
+                Text("Sign Up")
             }
-
         }
     }
 }

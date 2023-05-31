@@ -53,6 +53,7 @@ converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", ve
 roomRuntime = { module = "androidx.room:room-runtime", version.ref = "roomRuntimeVersion" }
 roomCompiler = { module = "androidx.room:room-compiler", version.ref = "roomCompilerVersion" }
 roomKtx = { module = "androidx.room:room-ktx", version.ref = "roomKtxVersion" }
+
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "com-android-application" }
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }

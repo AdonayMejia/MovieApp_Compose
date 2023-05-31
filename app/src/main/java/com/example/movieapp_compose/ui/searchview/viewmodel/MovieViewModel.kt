@@ -1,5 +1,6 @@
 package com.example.movieapp_compose.ui.searchview.viewmodel
 
+import android.content.Context
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DeleteForever
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -51,8 +52,12 @@ class MovieViewModel(private val repository: MoviesRepository) : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val favcharacters = repository.getFavMovie(userId)
             listFavMovie.emit(favcharacters)
-//
-
         }
+    }
+
+     fun deleteUserId(context: Context) {
+        val sharedPreferences = context.getSharedPreferences("owner", Context.MODE_PRIVATE)
+        sharedPreferences.edit().putBoolean("isLoggedIn", false).apply()
+        sharedPreferences.edit().putInt("userId", 0).apply()
     }
 }
