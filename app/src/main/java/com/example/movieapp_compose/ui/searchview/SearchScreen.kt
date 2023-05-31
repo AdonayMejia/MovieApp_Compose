@@ -1,5 +1,6 @@
 package com.example.movieapp_compose.ui.searchview
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -20,6 +21,7 @@ import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SheetState
@@ -36,7 +38,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,12 +49,13 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.movieapp_compose.R
 import com.example.movieapp_compose.model.api.RetrofitInstance.searchMovies
 import com.example.movieapp_compose.model.datamodel.MovieDetails
+import com.example.movieapp_compose.ui.searchview.viewmodel.MovieViewModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen() {
+fun SearchScreen(model: MovieViewModel) {
 
     var searchQuery by remember { mutableStateOf("") }
     var movies by remember { mutableStateOf<List<MovieDetails>>(emptyList()) }
@@ -79,22 +84,24 @@ fun SearchScreen() {
                 Text(text = "Search")
             }
             Spacer(modifier = Modifier.height(16.dp))
-            MovieList(movies = movies)
+            MovieList(movies = movies, model = model)
         }
     }
 
 @Composable
-fun MovieList(movies: List<MovieDetails>) {
+fun MovieList(movies: List<MovieDetails>, model: MovieViewModel) {
     LazyColumn{
         items(movies){movie ->
-            MovieItem(movie = movie)
+            MovieItem(movie = movie, viewModel = model)
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MovieItem(movie: MovieDetails) {
+fun MovieItem(movie: MovieDetails, viewModel: MovieViewModel) {
+    val favBtn by viewModel.favBtn.collectAsState()
+    val context = LocalContext.current
     val scaffoldState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
     
@@ -118,7 +125,12 @@ fun MovieItem(movie: MovieDetails) {
         Spacer(modifier = Modifier.width(16.dp))
         Text(text = movie.title)
         Column {
-            Icon(modifier = Modifier.align(Alignment.End),imageVector = Icons.Outlined.FavoriteBorder, contentDescription = "Favorite")
+            IconButton(onClick = { viewModel.addMovieToFavorite(movie, getUserId(context)) }) {
+                Icon(
+                    favBtn,
+                    modifier = Modifier.align(Alignment.End),
+                    contentDescription = "Favorite")
+            }
         }
     }
 }
@@ -171,8 +183,13 @@ fun MovieDetails(movie: MovieDetails ) {
 }
 
 
-@Preview(showSystemUi = true, showBackground = true)
-@Composable
-fun MoviesPreview() {
-    SearchScreen()
+//@Preview(showSystemUi = true, showBackground = true)
+//@Composable
+//fun MoviesPreview() {
+//    SearchScreen()
+//}
+
+private fun getUserId(context: Context) : Long {
+    val sharedPreferences = context.getSharedPreferences("owner", Context.MODE_PRIVATE)
+    return sharedPreferences.getInt("userId", 0).toLong()
 }
