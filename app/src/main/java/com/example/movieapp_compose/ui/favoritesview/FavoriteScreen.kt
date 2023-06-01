@@ -1,13 +1,12 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.movieapp_compose.ui.favoritesview
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -21,9 +20,9 @@ import androidx.compose.ui.util.lerp
 import coil.compose.rememberAsyncImagePainter
 import com.example.movieapp_compose.model.room.entity.MovieEntity
 import com.example.movieapp_compose.ui.searchview.viewmodel.MovieViewModel
-import kotlin.math.absoluteValue
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.rememberPagerState
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FavoriteScreen(
     viewModel: MovieViewModel
@@ -41,20 +40,21 @@ fun FavoriteScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        HorizontalPager(pageCount = movies.size, state = pagerState, pageSpacing = 10.dp) { page ->
+        HorizontalPager(count = movies.size, state = pagerState, itemSpacing = 10.dp) { page ->
             Card(
                 modifier = Modifier
                     .size(400.dp)
                     .graphicsLayer {
-                        val pageOffset = (
-                                (pagerState.currentPage - page) + pagerState
-                                    .currentPageOffsetFraction
-                                ).absoluteValue
+                        val pageOffset = (pagerState.currentPage - page) + pagerState.currentPageOffset
                         alpha = lerp(
                             start = 0.5f,
                             stop = 1f,
                             fraction = 1f - pageOffset.coerceIn(0f, 1f)
                         )
+                            .also{scale ->
+                                scaleX = scale
+                                scaleY = scale
+                            }
                     }
             ) {
                 val movie = movies[page]
