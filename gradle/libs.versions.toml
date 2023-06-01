@@ -23,6 +23,8 @@ converter-gson = "2.4.0"
 roomRuntimeVersion = "2.5.1"
 roomCompilerVersion = "2.5.1"
 roomKtxVersion = "2.5.1"
+acompanist-pager = "0.31.3-beta"
+compose-util = "1.4.3"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -53,6 +55,8 @@ converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", ve
 roomRuntime = { module = "androidx.room:room-runtime", version.ref = "roomRuntimeVersion" }
 roomCompiler = { module = "androidx.room:room-compiler", version.ref = "roomCompilerVersion" }
 roomKtx = { module = "androidx.room:room-ktx", version.ref = "roomKtxVersion" }
+compose-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "acompanist-pager"}
+compose-util = { module = "androidx.compose.ui:ui-util", version.ref = "compose-util"}
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "com-android-application" }
