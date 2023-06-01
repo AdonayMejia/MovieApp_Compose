@@ -24,6 +24,7 @@ import com.example.movieapp_compose.ui.searchview.viewmodel.MovieViewModel
 import com.example.movieapp_compose.ui.theme.MovieApp_ComposeTheme
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

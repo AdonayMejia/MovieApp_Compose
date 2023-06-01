@@ -8,7 +8,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 @SuppressLint("StaticFieldLeak")
-class RegisterViewModel( private var context: Context): ViewModel() {
+class RegisterViewModel(private var context: Context) : ViewModel() {
 
     fun registerUser(username: String, password: String): Boolean {
         val gson = Gson()
@@ -28,7 +28,7 @@ class RegisterViewModel( private var context: Context): ViewModel() {
                 val json = gson.toJson(users)
                 sharedPreferences.edit().putString("users", json).apply()
             } else {
-                val users : ArrayList<UserModel> = gson.fromJson(usersJson, listType)
+                val users: ArrayList<UserModel> = gson.fromJson(usersJson, listType)
                 users.add(
                     UserModel(
                         users.size + 1,
@@ -39,7 +39,7 @@ class RegisterViewModel( private var context: Context): ViewModel() {
                 val json = gson.toJson(users)
                 sharedPreferences.edit().putString("users", json).apply()
             }
-        } catch (e : Exception) {
+        } catch (e: Exception) {
             return false
         }
         return true

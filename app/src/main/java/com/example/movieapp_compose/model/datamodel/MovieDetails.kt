@@ -2,22 +2,22 @@ package com.example.movieapp_compose.model.datamodel
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieDetails (
+data class MovieDetails(
     @SerializedName("imdbID")
     val id: String,
 
     @SerializedName("Title")
-    var title : String,
+    var title: String,
 
     @SerializedName("Poster")
-    var poster : String,
+    var poster: String,
 
     @SerializedName("Year")
-    var year : String,
+    var year: String,
 
     @SerializedName("Type")
-    var type : String,
+    var type: String,
 
     @SerializedName("Response")
-    var response : String
+    var response: String
 )

@@ -6,9 +6,9 @@ import androidx.compose.material.icons.twotone.Star
 import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class BottomBarScreens(
-    val route : String,
-    val title : String,
-    val icon : ImageVector
+    val route: String,
+    val title: String,
+    val icon: ImageVector
 ) {
     object Search : BottomBarScreens(
         "SearchScreen",

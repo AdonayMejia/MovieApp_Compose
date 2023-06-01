@@ -10,9 +10,9 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 @SuppressLint("StaticFieldLeak")
-class LoginViewModel( private val context: Context) : ViewModel(){
+class LoginViewModel(private val context: Context) : ViewModel() {
 
-    fun login(username: String, password: String) : String? {
+    fun login(username: String, password: String): String? {
         if (username.isBlank() || password.isBlank()) {
             return "Username or Password is empty"
         }
@@ -23,8 +23,8 @@ class LoginViewModel( private val context: Context) : ViewModel(){
         }
         val listType = object : TypeToken<ArrayList<UserModel>>() {}.type
         val gson = Gson()
-        val users : ArrayList<UserModel> = gson.fromJson(usersJson, listType)
-        users.forEach {user ->
+        val users: ArrayList<UserModel> = gson.fromJson(usersJson, listType)
+        users.forEach { user ->
             if (user.username == username && user.password == password) {
                 onLoginSuccess(user)
                 return null

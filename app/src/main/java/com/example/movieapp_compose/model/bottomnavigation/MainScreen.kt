@@ -2,7 +2,6 @@ package com.example.movieapp_compose.model.bottomnavigation
 
 import android.annotation.SuppressLint
 import android.content.Context
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
@@ -40,7 +39,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.example.movieapp_compose.R
-import com.example.movieapp_compose.model.datamodel.MovieDetails
 import com.example.movieapp_compose.ui.searchview.viewmodel.MovieViewModel
 import kotlinx.coroutines.launch
 
@@ -54,7 +52,7 @@ fun MainScreen(viewModel: MovieViewModel, navRoot: NavHostController) {
     val context = LocalContext.current
     val sharedPreferences = context.getSharedPreferences("owner", Context.MODE_PRIVATE)
     val lastConnection = sharedPreferences.getString("connection", "")
-    val user = sharedPreferences.getString("userName","")
+    val user = sharedPreferences.getString("userName", "")
     Column(modifier = Modifier.fillMaxSize()) {
         ModalDrawer(
             drawerState = drawerState,
@@ -71,7 +69,8 @@ fun MainScreen(viewModel: MovieViewModel, navRoot: NavHostController) {
                         modifier = Modifier
                             .size(90.dp)
                             .fillMaxSize(),
-                        alignment = Alignment.Center)
+                        alignment = Alignment.Center
+                    )
                     Spacer(modifier = Modifier.padding(16.dp))
                     Text(text = "User Creation: $lastConnection")
                     Spacer(modifier = Modifier.padding(16.dp))

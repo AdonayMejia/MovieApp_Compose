@@ -5,5 +5,5 @@ import com.google.gson.annotations.SerializedName
 data class MovieSearch(
     @SerializedName("Search")
     val search: List<MovieDetails>,
-    val totalResult:Int
+    val totalResult: Int
 )

@@ -1,11 +1,6 @@
 package com.example.movieapp_compose.ui.searchview.viewmodel
 
 import android.content.Context
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DeleteForever
-import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movieapp_compose.model.datamodel.MovieDetails
@@ -18,12 +13,8 @@ import kotlinx.coroutines.launch
 
 class MovieViewModel(private val repository: MoviesRepository) : ViewModel() {
 
-    private val favBtnStateFlow = MutableStateFlow<ImageVector>(Icons.Filled.FavoriteBorder)
-    private val delBtnStateFlow = MutableStateFlow<ImageVector>(Icons.Filled.DeleteForever)
     private val listFavMovie = MutableStateFlow<List<MovieEntity>>(listOf())
 
-    val favBtn: MutableStateFlow<ImageVector> get() = favBtnStateFlow
-    val delBtn: MutableStateFlow<ImageVector> get() = delBtnStateFlow
     val movies: StateFlow<List<MovieEntity>> get() = listFavMovie
 
     fun addMovieToFavorite(movie: MovieDetails, userId: Long) {
@@ -42,20 +33,19 @@ class MovieViewModel(private val repository: MoviesRepository) : ViewModel() {
         }
     }
 
-    fun deleteFavoriteMovie(movie: MovieEntity) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteFavMovie(movie)
-            getMovieFav(movie.userId)
-        }
-    }
     fun getMovieFav(userId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
-            val favcharacters = repository.getFavMovie(userId)
-            listFavMovie.emit(favcharacters)
+            val favCharacters = repository.getFavMovie(userId)
+            listFavMovie.emit(favCharacters)
         }
     }
 
-     fun deleteUserId(context: Context) {
+    fun getUserId(context: Context): Long {
+        val sharedPreferences = context.getSharedPreferences("owner", Context.MODE_PRIVATE)
+        return sharedPreferences.getInt("userId", 0).toLong()
+    }
+
+    fun deleteUserId(context: Context) {
         val sharedPreferences = context.getSharedPreferences("owner", Context.MODE_PRIVATE)
         sharedPreferences.edit().putBoolean("isLoggedIn", false).apply()
         sharedPreferences.edit().putInt("userId", 0).apply()
