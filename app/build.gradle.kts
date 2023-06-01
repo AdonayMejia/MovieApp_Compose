@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -30,17 +31,17 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.2"
+        kotlinCompilerExtensionVersion = "1.4.3"
     }
     packaging {
         resources {
@@ -57,6 +58,7 @@ dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.ui)
     implementation(libs.ui.graphics)
+    implementation(libs.compose.material)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
     implementation(libs.compose.material.icons.core)
@@ -65,10 +67,14 @@ dependencies {
     implementation(libs.runtime.rxjava2)
     implementation(libs.runtime.livedata)
     implementation(libs.coil.compose)
+    implementation("androidx.compose.ui:ui-util")
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.navigation.compose)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+    implementation(libs.roomKtx)
+    implementation(libs.roomRuntime)
+    ksp(libs.roomCompiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
