@@ -2,7 +2,6 @@
 
 package com.example.movieapp_compose.ui.favoritesview
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,11 +21,8 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.movieapp_compose.model.room.entity.MovieEntity
 import com.example.movieapp_compose.ui.searchview.viewmodel.MovieViewModel
 import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.calculateCurrentOffsetForPage
 import com.google.accompanist.pager.rememberPagerState
-import kotlin.math.absoluteValue
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FavoriteScreen(
     viewModel: MovieViewModel
@@ -59,7 +55,6 @@ fun FavoriteScreen(
                                 scaleX = scale
                                 scaleY = scale
                             }
-//
                     }
             ) {
                 val movie = movies[page]
